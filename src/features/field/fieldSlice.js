@@ -18,6 +18,7 @@ const initialState = {
   editFieldId: "",
   name: "",
   description: "",
+  imageUrl: "",
   categoryId: 0,
   numberOfSlots: 0,
   price: 0,
@@ -42,9 +43,29 @@ const fieldSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
+    handleFieldImageInput: (state, { payload: { name, value } }) => {
+      state[name] = value;
+    },
     clearFieldValues: () => {
       return {
         ...initialState,
+      };
+    },
+    // Because index page is field page
+    clearInputFieldValues: (state) => {
+      return {
+        ...state,
+        slots: [],
+        search: "",
+        isEditing: false,
+        editFieldId: "",
+        name: "",
+        description: "",
+        imageUrl: "",
+        categoryId: 0,
+        numberOfSlots: 0,
+        price: 0,
+        totalRating: 0,
       };
     },
     setUpdateField: (state, { payload }) => {
@@ -97,5 +118,7 @@ export const {
   clearFieldValues,
   setUpdateField,
   changeFieldPage,
+  clearInputFieldValues,
+  handleFieldImageInput,
 } = fieldSlice.actions;
 export default fieldSlice.reducer;

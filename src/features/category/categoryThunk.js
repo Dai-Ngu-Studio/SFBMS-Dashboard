@@ -1,10 +1,10 @@
-import customFetch from "../../data/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../data/axios";
 
 export const getAllCategoriesThunk = async (_, thunkAPI) => {
   try {
-    const resp = await customFetch.get("/categories");
+    const resp = await customFetch.get("/odata/categories");
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("There was an error");
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };

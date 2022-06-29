@@ -28,6 +28,7 @@ const slotSlice = createSlice({
     setUpdateSlot: (state, { payload }) => {
       return { ...state, isSlotEditing: true, ...payload };
     },
+    clearSlotValues: () => initialState,
   },
   extraReducers: {
     [updateSlot.pending]: (state) => {
@@ -44,5 +45,6 @@ const slotSlice = createSlice({
   },
 });
 
-export const { handleSlotChange, setUpdateSlot } = slotSlice.actions;
+export const { handleSlotChange, setUpdateSlot, clearSlotValues } =
+  slotSlice.actions;
 export default slotSlice.reducer;

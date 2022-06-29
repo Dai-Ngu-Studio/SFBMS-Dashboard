@@ -1,10 +1,10 @@
-import customFetch from "../../data/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../data/axios";
 
 export const updateSlotThunk = async ({ slotId, slot }, thunkAPI) => {
   try {
-    const resp = await customFetch.put(`/slots/${slotId}`, slot);
+    const resp = await customFetch.put(`/odata/slots/${slotId}`, slot);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue("There was an error");
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };

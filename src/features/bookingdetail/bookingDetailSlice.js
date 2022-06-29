@@ -11,7 +11,7 @@ const initialState = {
   editBookingDetailId: 0,
   bookingId: 0,
   startTime: 0,
-  userId: 0,
+  userId: "",
   fieldId: 0,
   endTime: 0,
   status: 0,
@@ -27,7 +27,7 @@ export const getAllBookingDetails = createAsyncThunk(
   "bookingDetails/getBookingDetails",
   getAllBookingDetailsThunk
 );
-export const updateBookkingDetai = createAsyncThunk(
+export const updateBookingDetai = createAsyncThunk(
   "bookingDetails/updateBookingDetail",
   updateBookkingDetailThunk
 );
@@ -36,7 +36,7 @@ const bookingDetailSlice = createSlice({
   name: "bookingDetails",
   initialState,
   reducers: {
-    handleBookingDetailChange: (state, { name, value }) => {
+    handleBookingDetailChange: (state, { payload: { name, value } }) => {
       state[name] = value;
     },
     changeBookingDetailPage: (state, { payload }) => {
@@ -62,14 +62,14 @@ const bookingDetailSlice = createSlice({
       state.isBookingDetailLoading = false;
       toast.error(payload);
     },
-    [updateBookkingDetai.pending]: (state) => {
+    [updateBookingDetai.pending]: (state) => {
       state.isBookingDetailLoading = true;
     },
-    [updateBookkingDetai.fulfilled]: (state) => {
+    [updateBookingDetai.fulfilled]: (state) => {
       state.isBookingDetailLoading = false;
       toast.success("Booking Detail Modified...");
     },
-    [updateBookkingDetai.rejected]: (state, { payload }) => {
+    [updateBookingDetai.rejected]: (state, { payload }) => {
       state.isBookingDetailLoading = false;
       toast.error(payload);
     },
