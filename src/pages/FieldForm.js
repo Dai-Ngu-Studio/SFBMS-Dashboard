@@ -9,14 +9,17 @@ import {
   FormRowArea,
   FormRowSelect,
   Loading,
+  FormRowFile,
 } from "../components";
 import { getAllCategories } from "../features/category/categorySlice";
 import {
   addField,
   clearFieldValues,
   handleFieldChange,
+  handleFieldImageInput,
   updateField,
 } from "../features/field/fieldSlice";
+import { getImage } from "../features/image/imageSlice";
 import { setUpdateSlot } from "../features/slot/slotSlice";
 
 const FieldForm = () => {
@@ -31,7 +34,9 @@ const FieldForm = () => {
     totalRating,
     price,
     slots,
+    imageUrl,
   } = useSelector((store) => store.fields);
+  const { image, isGetImageLoading } = useSelector((store) => store.image);
   const { isCategoryLoading, categories } = useSelector(
     (store) => store.categories
   );
@@ -42,18 +47,27 @@ const FieldForm = () => {
     const value = e.target.value;
     dispatch(handleFieldChange({ name, value }));
   };
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const name = e.target.name;
+    const value = await convertToBase64(file);
+    dispatch(handleFieldImageInput({ name, value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    let tmpPrice = parseFloat(price);
-    let tmpCategory;
-    if (parseInt(categoryId) === 0) {
-      tmpCategory = categories[0].Id;
-    } else {
-      tmpCategory = parseInt(categoryId);
-    }
-    let tmpNumberOfSlots = parseInt(numberOfSlots);
-    let tmpTotalRating = parseInt(totalRating);
     if (!name || !numberOfSlots || !description || !price) {
       toast.error("Please fill out all fields");
       return;
@@ -70,36 +84,57 @@ const FieldForm = () => {
       return;
     }
 
-    if (isEditing) {
-      dispatch(
-        updateField({
-          fieldId: editFieldId,
-          field: {
-            name,
-            description,
-            categoryId: tmpCategory,
-            price: tmpPrice,
-            numberOfSlots: tmpNumberOfSlots,
-            totalRating: tmpTotalRating,
-          },
-        })
-      );
-      return;
-    }
-    dispatch(
-      addField({
-        name,
-        description,
-        categoryId: tmpCategory,
-        price: tmpPrice,
-        numberOfSlots: tmpNumberOfSlots,
-      })
-    );
+    dispatch(getImage({ tmpImage: imageUrl }));
   };
 
   useEffect(() => {
     dispatch(getAllCategories());
   }, []);
+
+  useEffect(() => {
+    let tmpPrice = parseFloat(price);
+    let tmpCategory;
+    if (parseInt(categoryId) === 0) {
+      if (categories.length > 0) {
+        tmpCategory = categories[0].id;
+      }
+    } else {
+      tmpCategory = parseInt(categoryId);
+    }
+    let tmpNumberOfSlots = parseInt(numberOfSlots);
+    let tmpTotalRating = parseInt(totalRating);
+    if (isEditing) {
+      if (isGetImageLoading) {
+        dispatch(
+          updateField({
+            fieldId: editFieldId,
+            field: {
+              name,
+              description,
+              categoryId: tmpCategory,
+              price: tmpPrice,
+              numberOfSlots: tmpNumberOfSlots,
+              totalRating: tmpTotalRating,
+              imageUrl: image,
+            },
+          })
+        );
+        return;
+      }
+    }
+    if (isGetImageLoading) {
+      dispatch(
+        addField({
+          name,
+          description,
+          categoryId: tmpCategory,
+          price: tmpPrice,
+          numberOfSlots: tmpNumberOfSlots,
+          imageUrl: image,
+        })
+      );
+    }
+  }, [isGetImageLoading]);
 
   if (isCategoryLoading) {
     return <Loading />;
@@ -113,6 +148,13 @@ const FieldForm = () => {
         <Header category="Page" title="Add Fields" />
       )}
       <form>
+        {/* Image */}
+        <FormRowFile
+          type="file"
+          name="imageUrl"
+          value={imageUrl}
+          handleChange={handleFileUpload}
+        />
         {/* Name */}
         <FormRow
           type="text"

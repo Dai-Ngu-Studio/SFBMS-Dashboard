@@ -4,6 +4,8 @@ import FeedbackForm from "./FeedbackForm";
 import Feedbacks from "./Feedbacks";
 import FieldForm from "./FieldForm";
 import Fields from "./Fields";
+import ProtectedRoute from "./ProtectedRoute";
+import Register from "./Register";
 import SlotForm from "./SlotForm";
 
 export {
@@ -14,4 +16,6 @@ export {
   BookingDetails,
   FeedbackForm,
   BookingDetailForm,
+  Register,
+  ProtectedRoute,
 };

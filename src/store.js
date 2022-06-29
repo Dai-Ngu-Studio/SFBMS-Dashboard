@@ -6,6 +6,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import slotSlice from "./features/slot/slotSlice";
 import feedbackSlice from "./features/feedback/feedbackSlice";
 import bookingDetailSlice from "./features/bookingdetail/bookingDetailSlice";
+import userSlice from "./features/user/userSlice";
+import imageSlice from "./features/image/imageSlice";
 
 // const persistConfig = {
 //   key: "root",
@@ -21,5 +23,7 @@ export const store = configureStore({
     slots: slotSlice,
     feedbacks: feedbackSlice,
     bookingDetails: bookingDetailSlice,
+    user: userSlice,
+    image: imageSlice,
   },
 });
