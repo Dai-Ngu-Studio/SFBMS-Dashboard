@@ -3,10 +3,11 @@ import { FcSportsMode } from "react-icons/fc";
 import { MdOutlineCancel } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { links } from "../data/dummy";
+import { links } from "../data/links";
 import { Link, NavLink } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import { useDispatch } from "react-redux";
+import { clearSlotValues } from "../features/slot/slotSlice";
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu, screenSize, currentColor } =
@@ -58,6 +59,7 @@ const Sidebar = () => {
                     key={link.name}
                     onClick={() => {
                       handleCloseSidebar();
+                      dispatch(clearSlotValues());
                       dispatch(link.clickEvent);
                     }}
                     style={({ isActive }) => ({

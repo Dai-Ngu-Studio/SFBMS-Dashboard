@@ -1,4 +1,3 @@
-import Button from "./Button";
 import FormRow from "./FormRow";
 import FormRowArea from "./FormRowArea";
 import FormRowSelect from "./FormRowSelect";
@@ -14,6 +13,7 @@ import TableFeedbacks from "./TableFeedbacks";
 import UserProfile from "./UserProfile";
 import TableBookingDetails from "./TableBookingDetails";
 import FormRowDate from "./FormRowDate";
+import FormRowFile from "./FormRowFile";
 
 export {
   Navbar,
@@ -25,11 +25,11 @@ export {
   Paging,
   FormRow,
   Sidebar,
-  Button,
   FormRowArea,
   FormRowSelect,
   TableFeedbacks,
   FormRowTime,
   TableBookingDetails,
   FormRowDate,
+  FormRowFile,
 };

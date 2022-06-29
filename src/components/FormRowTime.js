@@ -23,7 +23,7 @@ const FormRowTime = ({
         id={name}
         className={className}
         name={name}
-        value={moment(value).format("HH:mm:ss a")}
+        value={moment(value).format("HH:mm:ss")}
         onChange={handleChange}
         disabled={disabled}
         required

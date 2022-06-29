@@ -85,6 +85,7 @@ const TableFields = () => {
                           price: field.price,
                           totalRating: field.totalRating,
                           slots: field.slots,
+                          imageUrl: field.imageUrl,
                         })
                       )
                     }

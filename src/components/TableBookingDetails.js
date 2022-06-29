@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { showBookingDetailStatus } from "../data/dummy";
 import {
   getAllBookingDetails,
   setUpdateBookingDetail,
@@ -64,7 +65,9 @@ const TableBookingDetails = () => {
                 </td>
                 <td className="px-6 py-4">{bookingDetail.field.name}</td>
                 <td className="px-6 py-4">{bookingDetail.user.name}</td>
-                <td className="px-6 py-4">{bookingDetail.status}</td>
+                <td className="px-6 py-4">
+                  {showBookingDetailStatus(bookingDetail.status)}
+                </td>
                 <td className="px-6 py-4 text-right">
                   <Link
                     to="/bookingdetail-form"
