@@ -4,13 +4,14 @@ import {
   handleUserChange,
   loginUser,
   getUser,
+  clearStore,
 } from "../features/user/userSlice";
 import { FormRow } from "../components";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const { token, email, password, isUserLoading } = useSelector(
+  const { token, email, password, isUserLoading, user } = useSelector(
     (store) => store.user
   );
 
@@ -45,6 +46,12 @@ const Register = () => {
       }, 1000);
     }
   }, [token]);
+  useEffect(() => {
+    if (user && user.isAdmin === 0) {
+      toast.warning("Unauthorized! User will not be redirected to dashboard");
+      dispatch(clearStore());
+    }
+  }, [user]);
 
   return (
     <section className="h-screen">

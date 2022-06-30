@@ -9,7 +9,7 @@ import {
 } from "../components";
 import {
   handleBookingDetailChange,
-  updateBookingDetai,
+  updateBookingDetail,
 } from "../features/bookingdetail/bookingDetailSlice";
 import moment from "moment";
 import { bookingDetailStatus } from "../data/dummy";
@@ -44,7 +44,7 @@ const BookingDetailForm = () => {
 
     if (isBookingDetailEditing) {
       dispatch(
-        updateBookingDetai({
+        updateBookingDetail({
           bookingDetailId: editBookingDetailId,
           bookingDetail: {
             bookingId,

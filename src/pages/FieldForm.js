@@ -104,7 +104,7 @@ const FieldForm = () => {
     let tmpNumberOfSlots = parseInt(numberOfSlots);
     let tmpTotalRating = parseInt(totalRating);
     if (isEditing) {
-      if (isGetImageLoading) {
+      if (image !== "") {
         dispatch(
           updateField({
             fieldId: editFieldId,
@@ -122,7 +122,7 @@ const FieldForm = () => {
         return;
       }
     }
-    if (isGetImageLoading) {
+    if (image !== "") {
       dispatch(
         addField({
           name,
