@@ -41,6 +41,9 @@ const userSlice = createSlice({
         toast.success(payload);
       }
     },
+    clearUserLoginValues: (state) => {
+      return { ...state, email: "", password: "" };
+    },
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -76,6 +79,10 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleUserChange, logoutUser, toggleRegister } =
-  userSlice.actions;
+export const {
+  handleUserChange,
+  logoutUser,
+  toggleRegister,
+  clearUserLoginValues,
+} = userSlice.actions;
 export default userSlice.reducer;

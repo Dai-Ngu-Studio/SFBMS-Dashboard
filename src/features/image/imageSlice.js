@@ -17,10 +17,10 @@ const imageSlice = createSlice({
   },
   extraReducers: {
     [getImage.pending]: (state) => {
-      state.isGetImageLoading = false;
+      state.isGetImageLoading = true;
     },
     [getImage.fulfilled]: (state, { payload }) => {
-      state.isGetImageLoading = true;
+      state.isGetImageLoading = false;
       state.image = payload.imageUrl;
     },
     [getImage.rejected]: (state, { payload }) => {

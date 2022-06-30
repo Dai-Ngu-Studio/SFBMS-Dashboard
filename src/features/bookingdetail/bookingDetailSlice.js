@@ -27,7 +27,7 @@ export const getAllBookingDetails = createAsyncThunk(
   "bookingDetails/getBookingDetails",
   getAllBookingDetailsThunk
 );
-export const updateBookingDetai = createAsyncThunk(
+export const updateBookingDetail = createAsyncThunk(
   "bookingDetails/updateBookingDetail",
   updateBookkingDetailThunk
 );
@@ -62,14 +62,14 @@ const bookingDetailSlice = createSlice({
       state.isBookingDetailLoading = false;
       toast.error(payload);
     },
-    [updateBookingDetai.pending]: (state) => {
+    [updateBookingDetail.pending]: (state) => {
       state.isBookingDetailLoading = true;
     },
-    [updateBookingDetai.fulfilled]: (state) => {
+    [updateBookingDetail.fulfilled]: (state) => {
       state.isBookingDetailLoading = false;
       toast.success("Booking Detail Modified...");
     },
-    [updateBookingDetai.rejected]: (state, { payload }) => {
+    [updateBookingDetail.rejected]: (state, { payload }) => {
       state.isBookingDetailLoading = false;
       toast.error(payload);
     },

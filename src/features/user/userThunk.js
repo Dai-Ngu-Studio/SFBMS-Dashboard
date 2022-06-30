@@ -9,11 +9,12 @@ import { clearBookingDetailValues } from "../bookingdetail/bookingDetailSlice";
 import { clearFeedbackValues } from "../feedback/feedbackSlice";
 import { clearFieldValues } from "../field/fieldSlice";
 import { clearSlotValues } from "../slot/slotSlice";
-import { logoutUser } from "./userSlice";
+import { clearUserLoginValues, logoutUser } from "./userSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
     const authUser = await signInWithEmailAndPassword(auth, email, password);
+    thunkAPI.dispatch(clearUserLoginValues());
     return authUser.user.toJSON();
   } catch (error) {
     return thunkAPI.rejectWithValue(firebaseAuthError(error.code));
