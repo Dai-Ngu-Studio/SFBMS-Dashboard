@@ -55,8 +55,10 @@ const bookingDetailSlice = createSlice({
     },
     [getAllBookingDetails.fulfilled]: (state, { payload }) => {
       state.isBookingDetailLoading = false;
-      state.bookingDetails = payload.bookingDetails;
-      state.numOfBookingDetailPages = payload.numOfBookingDetailPages;
+      state.bookingDetails = payload.value;
+      state.numOfBookingDetailPages = Math.floor(
+        (payload["@odata.count"] - 1) / state.size + 1
+      );
     },
     [getAllBookingDetails.rejected]: (state, { payload }) => {
       state.isBookingDetailLoading = false;

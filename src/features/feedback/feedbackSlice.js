@@ -53,8 +53,10 @@ const feedbackSlice = createSlice({
     },
     [getAllFeedbacks.fulfilled]: (state, { payload }) => {
       state.isFeedbackLoading = false;
-      state.feedbacks = payload.feedbacks;
-      state.numOfFeedbackPages = payload.numOfFeedbackPages;
+      state.feedbacks = payload.value;
+      state.numOfFeedbackPages = Math.floor(
+        (payload["@odata.count"] - 1) / state.size + 1
+      );
     },
     [getAllFeedbacks.rejected]: (state, { payload }) => {
       state.isFeedbackLoading = false;

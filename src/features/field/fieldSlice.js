@@ -81,8 +81,10 @@ const fieldSlice = createSlice({
     },
     [getAllFields.fulfilled]: (state, { payload }) => {
       state.isFieldLoading = false;
-      state.fields = payload.fields;
-      state.numOfFieldPages = payload.numOfFieldPages;
+      state.fields = payload.value;
+      state.numOfFieldPages = Math.floor(
+        (payload["@odata.count"] - 1) / state.size + 1
+      );
     },
     [getAllFields.rejected]: (state, { payload }) => {
       state.isFieldLoading = false;

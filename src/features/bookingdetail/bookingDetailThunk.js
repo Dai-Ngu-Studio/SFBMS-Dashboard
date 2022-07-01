@@ -2,7 +2,9 @@ import customFetch, { checkForUnauthorizedResponse } from "../../data/axios";
 
 export const getAllBookingDetailsThunk = async (_, thunkAPI) => {
   const { page, size } = thunkAPI.getState().bookingDetails;
-  let url = `/odata/bookingdetails?${page}&size=${size}`;
+  let url = `/odata/bookingdetails?$count=true&$skip=${
+    size * (page - 1)
+  }&$top=${size}&$expand=User,Field`;
 
   try {
     const resp = await customFetch.get(url);

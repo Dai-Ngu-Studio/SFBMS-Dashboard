@@ -4,9 +4,11 @@ import { clearFieldValues } from "./fieldSlice";
 
 export const getAllFieldsThunk = async (_, thunkAPI) => {
   const { search, page, size } = thunkAPI.getState().fields;
-  let url = `/odata/fields?page=${page}&size=${size}`;
+  let url = `/odata/fields?$count=true&$skip=${
+    size * (page - 1)
+  }&$top=${size}&$expand=Slots,Category`;
   if (search) {
-    url = url + `&search=${search}`;
+    url = url + `&$filter=contains(tolower(name),tolower('${search}'))`;
   }
 
   try {
