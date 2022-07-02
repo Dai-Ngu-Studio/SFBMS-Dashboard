@@ -1,3 +1,5 @@
+import storage from "redux-persist/lib/storage";
+
 export const addTokenToLocalStorage = (token) => {
   localStorage.setItem("token", JSON.stringify(token));
 };
@@ -24,4 +26,8 @@ export const getUserFromLocalStorage = () => {
   const result = localStorage.getItem("user");
   const user = result ? JSON.parse(result) : null;
   return user;
+};
+
+export const removeStateFromLocalStorage = () => {
+  storage.removeItem("persist:root");
 };

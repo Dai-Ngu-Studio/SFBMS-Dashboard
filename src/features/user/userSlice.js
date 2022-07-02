@@ -6,6 +6,7 @@ import {
   addUserToLocalStorage,
   getTokenFromLocalStorage,
   getUserFromLocalStorage,
+  removeStateFromLocalStorage,
   removeTokenFromLocalStorage,
   removeUserFromLocalStorage,
 } from "../../data/localStorage";
@@ -37,6 +38,7 @@ const userSlice = createSlice({
       state.token = null;
       removeUserFromLocalStorage();
       removeTokenFromLocalStorage();
+      removeStateFromLocalStorage();
       if (payload) {
         toast.success(payload);
       }

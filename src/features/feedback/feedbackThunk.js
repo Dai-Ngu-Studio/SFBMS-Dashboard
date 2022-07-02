@@ -16,3 +16,12 @@ export const getAllFeedbacksThunk = async (_, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+
+export const getSingleFeedbackThunk = async ({ feedbackId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/odata/feedbacks/${feedbackId}?$expand=Field`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

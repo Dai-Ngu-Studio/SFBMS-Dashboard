@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { handleFieldImageInput } from "../features/field/fieldSlice";
+import React from "react";
 
 const FormRowFile = ({ type, name, value, handleChange }) => {
-  const [postImage, setPostImage] = useState("");
-  const dispatch = useDispatch();
-
   return (
     <div className="mb-6">
       <div className="flex justify-center items-center w-full">
@@ -29,7 +24,7 @@ const FormRowFile = ({ type, name, value, handleChange }) => {
               ></path>
             </svg>
             {value ? (
-              <img src={value} alt="field image" />
+              <img src={value} alt="sport-field" />
             ) : (
               <>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">

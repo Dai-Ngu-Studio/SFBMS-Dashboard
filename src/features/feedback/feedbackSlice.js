@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { getAllFeedbacksThunk } from "./feedbackThunk";
+import { getAllFeedbacksThunk, getSingleFeedbackThunk } from "./feedbackThunk";
 
 const initialState = {
   isFeedbackLoading: false,
@@ -24,6 +24,10 @@ export const getAllFeedbacks = createAsyncThunk(
   "feedbacks/getFeedbacks",
   getAllFeedbacksThunk
 );
+export const getSingleFeedback = createAsyncThunk(
+  "feedbacks/getSingleFeedback",
+  getSingleFeedbackThunk
+);
 
 const feedbackSlice = createSlice({
   name: "feedbacks",
@@ -38,13 +42,6 @@ const feedbackSlice = createSlice({
     },
     changeFeedbackPage: (state, { payload }) => {
       state.page = payload;
-    },
-    setUpdateFeedback: (state, { payload }) => {
-      return {
-        ...state,
-        isFeedbackEditing: true,
-        ...payload,
-      };
     },
   },
   extraReducers: {
@@ -62,13 +59,29 @@ const feedbackSlice = createSlice({
       state.isFeedbackLoading = false;
       toast.error(payload);
     },
+    [getSingleFeedback.pending]: (state) => {
+      state.isFeedbackLoading = true;
+      state.isFeedbackEditing = true;
+    },
+    [getSingleFeedback.fulfilled]: (state, { payload }) => {
+      state.isFeedbackLoading = false;
+      state.editFeedbackId = payload.id;
+      state.userId = payload.userId;
+      state.feedbackTime = payload.feedbackTime;
+      state.fieldId = payload.fieldId;
+      state.title = payload.title;
+      state.content = payload.content;
+      state.rating = payload.rating;
+      state.field = payload.field;
+    },
+    [getSingleFeedback.rejected]: (state, { payload }) => {
+      state.isFeedbackLoading = false;
+      state.isFeedbackEditing = false;
+      toast.error(payload);
+    },
   },
 });
 
-export const {
-  handleFeedbackChange,
-  clearFeedbackValues,
-  setUpdateFeedback,
-  changeFeedbackPage,
-} = feedbackSlice.actions;
+export const { handleFeedbackChange, clearFeedbackValues, changeFeedbackPage } =
+  feedbackSlice.actions;
 export default feedbackSlice.reducer;

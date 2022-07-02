@@ -19,6 +19,17 @@ export const getAllFieldsThunk = async (_, thunkAPI) => {
   }
 };
 
+export const getSingleFieldThunk = async ({ fieldId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(
+      `/odata/fields/${fieldId}?$expand=Slots`
+    );
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const addFieldThunk = async (field, thunkAPI) => {
   try {
     const resp = await customFetch.post("/odata/fields", field);

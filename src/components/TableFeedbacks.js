@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import {
   getAllFeedbacks,
-  setUpdateFeedback,
+  getSingleFeedback,
 } from "../features/feedback/feedbackSlice";
 
 const TableFeedbacks = () => {
@@ -67,15 +67,8 @@ const TableFeedbacks = () => {
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     onClick={() =>
                       dispatch(
-                        setUpdateFeedback({
-                          editFeedbackId: feedback.id,
-                          userId: feedback.userId,
-                          fieldId: feedback.fieldId,
-                          title: feedback.title,
-                          content: feedback.content,
-                          rating: feedback.rating,
-                          feedbackTime: feedback.feedbackTime,
-                          field: feedback.field,
+                        getSingleFeedback({
+                          feedbackId: feedback.id,
                         })
                       )
                     }

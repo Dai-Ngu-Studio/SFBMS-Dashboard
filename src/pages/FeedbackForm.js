@@ -4,14 +4,15 @@ import {
   FormRow,
   FormRowArea,
   FormRowDate,
-  FormRowTime,
   Header,
+  Loading,
 } from "../components";
 import { handleFeedbackChange } from "../features/feedback/feedbackSlice";
 
 const FeedbackForm = () => {
   const {
     isFeedbackEditing,
+    isFeedbackLoading,
     fieldId,
     userId,
     feedbackTime,
@@ -28,6 +29,10 @@ const FeedbackForm = () => {
     const value = e.target.value;
     dispatch(handleFeedbackChange({ name, value }));
   };
+
+  if (isFeedbackLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="m-2 md:m-10 p-2 md:p-10 bg-gray-100 rounded-3xl">

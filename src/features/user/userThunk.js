@@ -1,7 +1,4 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import customFetch, { checkForUnauthorizedResponse } from "../../data/axios";
 import { auth } from "../../data/firebase";
 import { firebaseAuthError } from "../../data/firebaseError";

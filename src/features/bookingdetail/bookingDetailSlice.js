@@ -1,5 +1,6 @@
 import {
   getAllBookingDetailsThunk,
+  getSingleBookingDetailThunk,
   updateBookkingDetailThunk,
 } from "./bookingDetailThunk";
 import { toast } from "react-toastify";
@@ -27,6 +28,10 @@ export const getAllBookingDetails = createAsyncThunk(
   "bookingDetails/getBookingDetails",
   getAllBookingDetailsThunk
 );
+export const getSingleBookingDetail = createAsyncThunk(
+  "bookingDetails/getSingleBookingDetail",
+  getSingleBookingDetailThunk
+);
 export const updateBookingDetail = createAsyncThunk(
   "bookingDetails/updateBookingDetail",
   updateBookkingDetailThunk
@@ -45,9 +50,6 @@ const bookingDetailSlice = createSlice({
     clearBookingDetailValues: () => {
       return { ...initialState };
     },
-    setUpdateBookingDetail: (state, { payload }) => {
-      return { ...state, isBookingDetailEditing: true, ...payload };
-    },
   },
   extraReducers: {
     [getAllBookingDetails.pending]: (state) => {
@@ -62,6 +64,27 @@ const bookingDetailSlice = createSlice({
     },
     [getAllBookingDetails.rejected]: (state, { payload }) => {
       state.isBookingDetailLoading = false;
+      toast.error(payload);
+    },
+    [getSingleBookingDetail.pending]: (state) => {
+      state.isBookingDetailLoading = true;
+      state.isBookingDetailEditing = true;
+    },
+    [getSingleBookingDetail.fulfilled]: (state, { payload }) => {
+      state.isBookingDetailLoading = false;
+      state.editBookingDetailId = payload.id;
+      state.bookingId = payload.bookingId;
+      state.startTime = payload.startTime;
+      state.userId = payload.userId;
+      state.fieldId = payload.fieldId;
+      state.endTime = payload.endTime;
+      state.status = payload.status;
+      state.price = payload.price;
+      state.slotNumber = payload.slotNumber;
+    },
+    [getSingleBookingDetail.rejected]: (state, { payload }) => {
+      state.isBookingDetailLoading = false;
+      state.isBookingDetailEditing = false;
       toast.error(payload);
     },
     [updateBookingDetail.pending]: (state) => {
@@ -82,6 +105,5 @@ export const {
   handleBookingDetailChange,
   changeBookingDetailPage,
   clearBookingDetailValues,
-  setUpdateBookingDetail,
 } = bookingDetailSlice.actions;
 export default bookingDetailSlice.reducer;

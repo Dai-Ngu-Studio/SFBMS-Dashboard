@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { showBookingDetailStatus } from "../data/dummy";
 import {
   getAllBookingDetails,
-  setUpdateBookingDetail,
+  getSingleBookingDetail,
 } from "../features/bookingdetail/bookingDetailSlice";
 import Loading from "./Loading";
 
@@ -74,16 +74,8 @@ const TableBookingDetails = () => {
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     onClick={() =>
                       dispatch(
-                        setUpdateBookingDetail({
-                          editBookingDetailId: bookingDetail.id,
-                          userId: bookingDetail.userId,
-                          fieldId: bookingDetail.fieldId,
-                          bookingId: bookingDetail.bookingId,
-                          startTime: bookingDetail.startTime,
-                          endTime: bookingDetail.endTime,
-                          status: bookingDetail.status,
-                          price: bookingDetail.price,
-                          slotNumber: bookingDetail.slotNumber,
+                        getSingleBookingDetail({
+                          bookingDetailId: bookingDetail.id,
                         })
                       )
                     }

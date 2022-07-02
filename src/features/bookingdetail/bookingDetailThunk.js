@@ -14,6 +14,20 @@ export const getAllBookingDetailsThunk = async (_, thunkAPI) => {
   }
 };
 
+export const getSingleBookingDetailThunk = async (
+  { bookingDetailId },
+  thunkAPI
+) => {
+  try {
+    const resp = await customFetch.get(
+      `/odata/bookingdetails/${bookingDetailId}`
+    );
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const updateBookkingDetailThunk = async (
   { bookingDetailId, bookingDetail },
   thunkAPI

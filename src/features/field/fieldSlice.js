@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   addFieldThunk,
   getAllFieldsThunk,
+  getSingleFieldThunk,
   updateFieldThunk,
 } from "./fieldThunk";
 
@@ -28,6 +29,10 @@ const initialState = {
 export const getAllFields = createAsyncThunk(
   "fields/getFields",
   getAllFieldsThunk
+);
+export const getSingleField = createAsyncThunk(
+  "fields/getField",
+  getSingleFieldThunk
 );
 export const addField = createAsyncThunk("fields/addField", addFieldThunk);
 export const updateField = createAsyncThunk(
@@ -68,9 +73,6 @@ const fieldSlice = createSlice({
         totalRating: 0,
       };
     },
-    setUpdateField: (state, { payload }) => {
-      return { ...state, isEditing: true, ...payload };
-    },
     changeFieldPage: (state, { payload }) => {
       state.page = payload;
     },
@@ -88,6 +90,27 @@ const fieldSlice = createSlice({
     },
     [getAllFields.rejected]: (state, { payload }) => {
       state.isFieldLoading = false;
+      toast.error(payload);
+    },
+    [getSingleField.pending]: (state) => {
+      state.isFieldLoading = true;
+      state.isEditing = true;
+    },
+    [getSingleField.fulfilled]: (state, { payload }) => {
+      state.isFieldLoading = false;
+      state.editFieldId = payload.id;
+      state.name = payload.name;
+      state.numberOfSlots = payload.numberOfSlots;
+      state.categoryId = payload.categoryId;
+      state.description = payload.description;
+      state.price = payload.price;
+      state.totalRating = payload.totalRating;
+      state.slots = payload.slots;
+      state.imageUrl = payload.imageUrl;
+    },
+    [getSingleField.rejected]: (state, { payload }) => {
+      state.isFieldLoading = false;
+      state.isEditing = false;
       toast.error(payload);
     },
     [addField.pending]: (state) => {
@@ -118,7 +141,6 @@ const fieldSlice = createSlice({
 export const {
   handleFieldChange,
   clearFieldValues,
-  setUpdateField,
   changeFieldPage,
   clearInputFieldValues,
   handleFieldImageInput,
