@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading } from ".";
-import { getAllFields, getSingleField } from "../features/field/fieldSlice";
+import {
+  getAllFields,
+  getSingleField,
+  setUpdateField,
+} from "../features/field/fieldSlice";
 
 const TableFields = () => {
   const { isFieldLoading, fields, search, page } = useSelector(
@@ -76,8 +80,16 @@ const TableFields = () => {
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     onClick={() =>
                       dispatch(
-                        getSingleField({
-                          fieldId: field.id,
+                        setUpdateField({
+                          editFieldId: field.id,
+                          name: field.name,
+                          numberOfSlots: field.numberOfSlots,
+                          categoryId: field.categoryId,
+                          description: field.description,
+                          price: field.price,
+                          totalRatin: field.totalRating,
+                          slots: field.slots,
+                          imageUrl: field.imageUrl,
                         })
                       )
                     }

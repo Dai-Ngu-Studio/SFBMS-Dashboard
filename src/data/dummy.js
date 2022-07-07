@@ -9,6 +9,33 @@ export const slotStatus = [
   },
 ];
 
+export const slotNumberList = [
+  {
+    id: 8,
+    name: 8,
+  },
+  {
+    id: 12,
+    name: 12,
+  },
+  {
+    id: 16,
+    name: 16,
+  },
+  {
+    id: 18,
+    name: 18,
+  },
+  {
+    id: 22,
+    name: 22,
+  },
+  {
+    id: 24,
+    name: 24,
+  },
+];
+
 export const bookingDetailStatus = [
   {
     id: 0,
