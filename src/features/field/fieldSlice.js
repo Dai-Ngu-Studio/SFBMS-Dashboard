@@ -21,7 +21,7 @@ const initialState = {
   description: "",
   imageUrl: "",
   categoryId: 0,
-  numberOfSlots: 0,
+  numberOfSlots: 8,
   price: 0,
   totalRating: 0,
 };
@@ -54,6 +54,13 @@ const fieldSlice = createSlice({
     clearFieldValues: () => {
       return {
         ...initialState,
+      };
+    },
+    setUpdateField: (state, { payload }) => {
+      return {
+        ...state,
+        isEditing: true,
+        ...payload,
       };
     },
     // Because index page is field page
@@ -144,5 +151,6 @@ export const {
   changeFieldPage,
   clearInputFieldValues,
   handleFieldImageInput,
+  setUpdateField,
 } = fieldSlice.actions;
 export default fieldSlice.reducer;

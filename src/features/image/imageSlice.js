@@ -4,6 +4,7 @@ import { getImageThunk } from "./imageThunk";
 
 const initialState = {
   isGetImageLoading: false,
+  isImageEditing: false,
   image: "",
 };
 
@@ -14,6 +15,10 @@ const imageSlice = createSlice({
   initialState,
   reducers: {
     clearImageValues: () => initialState,
+    changeImageLoading: (state) => {
+      state.isGetImageLoading = true;
+      state.isImageEditing = true;
+    },
   },
   extraReducers: {
     [getImage.pending]: (state) => {
@@ -30,5 +35,5 @@ const imageSlice = createSlice({
   },
 });
 
-export const { clearImageValues } = imageSlice.actions;
+export const { clearImageValues, changeImageLoading } = imageSlice.actions;
 export default imageSlice.reducer;

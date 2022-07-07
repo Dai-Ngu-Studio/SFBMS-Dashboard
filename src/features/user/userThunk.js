@@ -11,7 +11,6 @@ import { clearUserLoginValues, logoutUser } from "./userSlice";
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
     const authUser = await signInWithEmailAndPassword(auth, email, password);
-    thunkAPI.dispatch(clearUserLoginValues());
     return authUser.user.toJSON();
   } catch (error) {
     return thunkAPI.rejectWithValue(firebaseAuthError(error.code));
@@ -21,6 +20,7 @@ export const loginUserThunk = async ({ email, password }, thunkAPI) => {
 export const getUserThunk = async (_, thunkAPI) => {
   try {
     const user = await customFetch.post("/api/users/login");
+    thunkAPI.dispatch(clearUserLoginValues());
     return user.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);
