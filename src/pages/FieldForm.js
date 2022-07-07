@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import {
   Loading,
   FormRowFile,
 } from "../components";
+import { slotNumberList } from "../data/dummy";
 import { getAllCategories } from "../features/category/categorySlice";
 import {
   addField,
@@ -19,7 +20,7 @@ import {
   handleFieldImageInput,
   updateField,
 } from "../features/field/fieldSlice";
-import { getImage } from "../features/image/imageSlice";
+import { changeImageLoading, getImage } from "../features/image/imageSlice";
 import { setUpdateSlot } from "../features/slot/slotSlice";
 
 const FieldForm = () => {
@@ -36,11 +37,14 @@ const FieldForm = () => {
     slots,
     imageUrl,
   } = useSelector((store) => store.fields);
-  const { image, isGetImageLoading } = useSelector((store) => store.image);
+  const { image, isGetImageLoading, isImageEditing } = useSelector(
+    (store) => store.image
+  );
   const { isCategoryLoading, categories } = useSelector(
     (store) => store.categories
   );
   const dispatch = useDispatch();
+  const [imageFirstValue, setImageFirstValue] = useState(imageUrl);
 
   const handleFieldInput = (e) => {
     const name = e.target.name;
@@ -72,18 +76,19 @@ const FieldForm = () => {
       toast.error("Please fill out all fields");
       return;
     }
-    if (numberOfSlots < 0) {
-      toast.warning("Please enter above 0");
-      return;
-    } else if (numberOfSlots > 13) {
-      toast.warning("Only enter below 13 slots");
-      return;
-    }
     if (price < 0) {
       toast.warning("Please enter above 0");
       return;
     }
 
+    if (isEditing) {
+      if (imageUrl !== imageFirstValue) {
+        dispatch(getImage({ tmpImage: imageUrl }));
+        return;
+      }
+      dispatch(changeImageLoading());
+      return;
+    }
     dispatch(getImage({ tmpImage: imageUrl }));
   };
 
@@ -104,7 +109,7 @@ const FieldForm = () => {
     let tmpNumberOfSlots = parseInt(numberOfSlots);
     let tmpTotalRating = parseInt(totalRating);
     if (isEditing) {
-      if (image !== "") {
+      if (image !== "" || isImageEditing) {
         dispatch(
           updateField({
             fieldId: editFieldId,
@@ -115,7 +120,7 @@ const FieldForm = () => {
               price: tmpPrice,
               numberOfSlots: tmpNumberOfSlots,
               totalRating: tmpTotalRating,
-              imageUrl: image,
+              imageUrl: image !== "" ? image : imageUrl,
             },
           })
         );
@@ -179,6 +184,7 @@ const FieldForm = () => {
           value={categoryId}
           handleChange={handleFieldInput}
           list={categories}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         {/* Price */}
         <FormRow
@@ -190,9 +196,8 @@ const FieldForm = () => {
           handleChange={handleFieldInput}
         />
         {/* Number Of Slots */}
-        <FormRow
+        <FormRowSelect
           name="numberOfSlots"
-          type="number"
           value={numberOfSlots}
           labelText="Number Of Slots"
           disabled={isEditing}
@@ -202,6 +207,7 @@ const FieldForm = () => {
               : "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           }
           handleChange={handleFieldInput}
+          list={slotNumberList}
         />
         {isEditing && (
           <FormRow
