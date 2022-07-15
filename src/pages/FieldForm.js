@@ -72,14 +72,14 @@ const FieldForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !numberOfSlots || !description || !price) {
+    if (!name || !numberOfSlots || !description) {
       toast.error("Please fill out all fields");
       return;
     }
-    if (price < 0) {
-      toast.warning("Please enter above 0");
-      return;
-    }
+    // if (price < 0) {
+    //   toast.warning("Please enter above 0");
+    //   return;
+    // }
 
     if (isEditing) {
       if (imageUrl !== imageFirstValue) {
@@ -133,7 +133,7 @@ const FieldForm = () => {
           name,
           description,
           categoryId: tmpCategory,
-          price: tmpPrice,
+          price: 10000,
           numberOfSlots: tmpNumberOfSlots,
           imageUrl: image,
         })
@@ -187,14 +187,14 @@ const FieldForm = () => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         {/* Price */}
-        <FormRow
+        {/* <FormRow
           name="price"
           type="number"
           value={price}
           labelText="Price"
           className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
           handleChange={handleFieldInput}
-        />
+        /> */}
         {/* Number Of Slots */}
         <FormRowSelect
           name="numberOfSlots"

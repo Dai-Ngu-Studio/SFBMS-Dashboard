@@ -43,9 +43,9 @@ const TableFields = () => {
             <th scope="col" className="px-6 py-3">
               Category
             </th>
-            <th scope="col" className="px-6 py-3">
+            {/* <th scope="col" className="px-6 py-3">
               Price
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-3">
               Number Of Slots
             </th>
@@ -71,7 +71,7 @@ const TableFields = () => {
                     : field.description}
                 </td>
                 <td className="px-6 py-4">{field.category.name}</td>
-                <td className="px-6 py-4">{field.price}</td>
+                {/* <td className="px-6 py-4">{field.price}</td> */}
                 <td className="px-6 py-4">{field.numberOfSlots}</td>
                 <td className="px-6 py-4">{field.totalRating}</td>
                 <td className="px-6 py-4 text-right">
